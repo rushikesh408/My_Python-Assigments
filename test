@@ -1,0 +1,41 @@
+def display_description():
+    print("""\tThis Find Simple Interest application will ask user to specify
+    the amount of a loan, an interest rate, and the number of years.
+    The application calculates and display the simple interest for the
+    given loan at the specified interest for a specified number of years.""")
+
+def get_int(prompt,low):
+    while True:
+     userentry=int(input(prompt))
+     if userentry>low:
+           return userentry
+     else:
+         print("try again")
+        #get_int(prompt, low)
+
+def get_float(prompt,low):
+    while True:
+     userentry=float(input(prompt))
+     if userentry>low:
+           return userentry
+     else:
+         print("try again")
+        #get_int(prompt, low)
+
+def calculate_simple_interest(principle, interest_rate, years=1):
+    sol= principle*(interest_rate/100)*years
+    return  sol
+
+
+def main():
+    display_description()
+    loan=get_int("enter a loan",0)
+    print(loan)
+    intrest=get_float("enter float",0)
+    print((intrest))
+    years=int(input("enter num of years"))
+    solu=calculate_simple_interest(loan,intrest,years)
+    print("jdjdj",solu)
+
+if __name__ == "__main__":
+    main()
