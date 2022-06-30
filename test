@@ -10,7 +10,7 @@ def get_int(prompt,low):
      if userentry>low:
            return userentry
      else:
-         print("try again")
+         print("Entry must be an integer greater than 0 Please try again.")
         #get_int(prompt, low)
 
 def get_float(prompt,low):
@@ -19,8 +19,8 @@ def get_float(prompt,low):
      if userentry>low:
            return userentry
      else:
-         print("try again")
-        #get_int(prompt, low)
+         print("Entry must be a floating number greater than 0.0 Please try again.")
+#get_int(prompt, low)
 
 def calculate_simple_interest(principle, interest_rate, years=1):
     sol= principle*(interest_rate/100)*years
@@ -28,14 +28,21 @@ def calculate_simple_interest(principle, interest_rate, years=1):
 
 
 def main():
-    display_description()
-    loan=get_int("enter a loan",0)
-    print(loan)
-    intrest=get_float("enter float",0)
-    print((intrest))
-    years=int(input("enter num of years"))
-    solu=calculate_simple_interest(loan,intrest,years)
-    print("jdjdj",solu)
+    user_choice = 'y'
+    while user_choice.lower() == 'y':
+            display_description()
+            loan=get_int("enter a loan",0)
+            print(loan)
+            intrest=get_float("enter intrest rate",0)
+            print((intrest))
 
+            while True:
+                years=int(input("enter num of years"))
+                if(years>0):
+                    solu=calculate_simple_interest(loan,intrest,years)
+                    print(" The interest on a loan of $", loan, "at", intrest, "interest rate for", years, "years is $", solu)
+                    break
+                else: print("Entry must be an integer greater than 0 Please try again.")
+user_choice = input("Do you want to do another calculation? (y for yes)")
 if __name__ == "__main__":
     main()
