@@ -43,6 +43,6 @@ def main():
                     print(" The interest on a loan of $", loan, "at", intrest, "interest rate for", years, "years is $", solu)
                     break
                 else: print("Entry must be an integer greater than 0 Please try again.")
-user_choice = input("Do you want to do another calculation? (y for yes)")
+            user_choice = input("Do you want to do another calculation? (y for yes)")
 if __name__ == "__main__":
     main()
