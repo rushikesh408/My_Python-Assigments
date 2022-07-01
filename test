@@ -28,9 +28,10 @@ def calculate_simple_interest(principle, interest_rate, years=1):
 
 
 def main():
+    display_description()
     user_choice = 'y'
     while user_choice.lower() == 'y':
-            display_description()
+
             loan=get_int("enter a loan",0)
             print(loan)
             intrest=get_float("enter intrest rate",0)
@@ -42,7 +43,8 @@ def main():
                     solu=calculate_simple_interest(loan,intrest,years)
                     print(" The interest on a loan of $", loan, "at", intrest, "interest rate for", years, "years is $", solu)
                     break
-                else: print("Entry must be an integer greater than 0 Please try again.")
+                else: print("Entry must  be an integer greater than 0 Please try again.")
             user_choice = input("Do you want to do another calculation? (y for yes)")
+    print("done")
 if __name__ == "__main__":
     main()
