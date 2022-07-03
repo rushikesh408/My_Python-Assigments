@@ -4,6 +4,7 @@ def display_description():
     The application calculates and display the simple interest for the
     given loan at the specified interest for a specified number of years.""")
 
+
 def get_int(prompt,low):
     while True:
      userentry=int(input(prompt))
@@ -13,6 +14,7 @@ def get_int(prompt,low):
          print("Entry must be an integer greater than 0 Please try again.")
         #get_int(prompt, low)
 
+
 def get_float(prompt,low):
     while True:
      userentry=float(input(prompt))
@@ -21,6 +23,7 @@ def get_float(prompt,low):
      else:
          print("Entry must be a floating number greater than 0.0 Please try again.")
 #get_int(prompt, low)
+
 
 def calculate_simple_interest(principle, interest_rate, years=1):
     sol= principle*(interest_rate/100)*years
@@ -37,13 +40,18 @@ def main():
             intrest=get_float("enter intrest rate",0)
             print((intrest))
 
-            while True:
-                years=int(input("enter num of years"))
-                if(years>0):
-                    solu=calculate_simple_interest(loan,intrest,years)
-                    print(" The interest on a loan of $", loan, "at", intrest, "interest rate for", years, "years is $", solu)
-                    break
-                else: print("Entry must  be an integer greater than 0 Please try again.")
+            years = get_int("enter num of years",0)
+            print(years)
+            solu=calculate_simple_interest(loan,intrest,years)
+            print(" The interest on a loan of $", loan, "at", intrest, "interest rate for", years, "years is $", solu)
+
+            # while True:
+           #      years=int(input("enter num of years"))
+           #      if(years>0):
+           #          solu=calculate_simple_interest(loan,intrest,years)
+           #          print(" The interest on a loan of $", loan, "at", intrest, "interest rate for", years, "years is $", solu)
+           #          break
+           #      else: print("Entry must  be an integer greater than 0 Please try again.")
             user_choice = input("Do you want to do another calculation? (y for yes)")
     print("done")
 if __name__ == "__main__":
