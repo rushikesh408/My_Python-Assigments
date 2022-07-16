@@ -1,0 +1,95 @@
+import csv
+
+
+def display_description():
+    print('''\
+         This Find Simple Interest application will ask user to specify
+the amount of a loan, an interest rate, and the number of years.
+The application calculates and display the simple interest for the
+given loan at the specified interest for a specified number of years.''')
+
+
+def get_float(prompt, low):
+    while True:
+        entry = float(input(prompt))
+        if entry > low:
+            return entry
+        else:
+            print(f"Entry must be a float number greater than {low}. Please try again.")
+
+
+def get_int(prompt, low):
+    while True:
+        entry = int(input(prompt))
+        if entry > low:
+            return entry
+        else:
+            print(f"Entry must be an integer greater than {low}. Please try again.")
+
+
+def calculate_simple_interest(interest_rate, principle=10000000, years=1):
+    return principle * (interest_rate / 100) * years
+
+def write_to_file(file_name, data, col_separator=";"):
+    with open(file_name, "w", newline="") as fo:
+        file_writer = csv.writer(fo, delimiter=col_separator)
+        file_writer.writerows(data)
+        # for record in data:
+        #     file_writer.writerow(record)
+
+
+def read_and_display(file_name, col_separator=";"):
+    with open(file_name, newline="") as fi:
+        file_reader = csv.reader(fi, delimiter=col_separator)
+        next(file_reader)
+
+        for loan, rate, time, interest in file_reader:
+            print("\tThe interest on a loan of $", loan, " at ", rate,
+                  "% interest rate for ", time, " year", ('s' if int(time) > 1 else ''),
+                  " \nis $", round(float(interest), 2), ".", sep='')
+
+
+def main():
+
+    display_description()
+    print()
+
+    file = "rveerama.csv"
+
+    name = [["Loan", "Rate", "Time", "Interest"]]
+    while True:
+
+        lowloan = 0
+        loan = get_int(f"Please enter the amount of loan (>{lowloan}): ", lowloan)
+        lowrate = 0.0
+        rate = get_float(f"Please enter the interest rate (>{lowrate}): ", lowrate)
+        lowtime = 0
+        time = get_int(f"Please enter the number of years (>{lowtime}): ", lowtime)
+        interest = calculate_simple_interest(principle=loan, interest_rate=rate, years=time)
+
+
+        name.append([loan, rate, time, interest])
+
+
+        if input("Do you want to do another calculation? (y for yes)").lower() != 'y':
+            break
+    print()
+
+
+    for i in name:
+        print(i)
+    print()
+
+
+    write_to_file(file, name)
+
+
+    read_and_display(file)
+    print()
+
+    print("Done!")
+
+if __name__ == '__main__':
+    main()
+
+
