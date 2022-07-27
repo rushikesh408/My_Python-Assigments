@@ -1,0 +1,125 @@
+#! /usr/local/bin/python3.10
+
+import csv
+import sys
+from pathlib import Path
+
+
+def main():
+    display_description()
+    print()
+    file = get_file_name()
+    records = [["Loan", "Rate", "Time", "Interest"]]
+    while True:
+        loan_lowest = 0
+        loan = get_int(f"Please enter the amount of loan (>{loan_lowest}): ", loan_lowest)
+        rate_lowest = 0.0
+        rate = get_float(f"Please enter the interest rate (>{rate_lowest}): ", rate_lowest)
+        time_lowest = 0
+        time = get_int(f"Please enter the number of years (>{time_lowest}): ", time_lowest)
+        interest = calculate_simple_interest(principle=loan, interest_rate=rate, years=time)
+        records.append([loan, rate, time, interest])
+        if input("Do you want to do another calculation? (y for yes)").lower() != 'y':
+            break
+    print()
+    for record in records:
+        print(record)
+    print()
+    write_to_file(file, records)
+    try:
+        read_and_display(file)
+    except OSError as e:
+        print(type(e), "Test Handling OSError.")
+        exit_program()
+
+    print()
+
+    print("Done!")
+
+
+def exit_program():
+   sys.exit("Terminating the program....")
+
+
+def get_file_name():
+    while True:
+        file_name = input("Please enter a csv file name for recording data:")
+        if file_name.endswith(".csv"):
+            # try:
+            #     file_tst = open(file_name)
+            # except FileNotFoundError as e:
+            #     print("No such file or directory. Please enter the name of an existing .csv file.")
+            #
+            # else:
+            #     file_tst.close()
+            #     return file_name
+            file = Path(file_name)
+            if file.exists():
+                return file
+            else:
+                print("No such file or directory. Please enter the name of an existing .csv file.")
+        else:
+            print("It has to be a .csv file.")
+
+
+def write_to_file(file_name, data, col_separator=";"):
+    with open(file_name, "w", newline="") as fo:
+        file_writer = csv.writer(fo, delimiter=col_separator)
+        file_writer.writerows(data)
+        # for record in data:
+        #     file_writer.writerow(record)
+
+
+def read_and_display(file_name, sep=";"):
+    with open(file_name, newline="") as fi:
+        file_reader = csv.reader(fi, delimiter=sep)
+        next(file_reader)
+        for loan, rate, time, interest in file_reader:
+            print("\tThe interest on a loan of $", loan, " at ", rate,
+                  "% interest rate for ", time, " year", ('s' if int(time) > 1 else ''),
+                  " \nis $", round(float(interest), 2), ".", sep='')
+    raise OSError
+
+
+def calculate_simple_interest(interest_rate, principle=10_000_000, years=1):
+    return principle * (interest_rate / 100) * years
+
+
+def get_float(prompt, low):
+    while True:
+        try:
+            entry = float(input(prompt))
+        except ValueError as e:
+            print("ValueError:", e)
+        else:
+            if entry > low:
+                return entry
+            else:
+                print(f"Entry must be a float number greater than {low}. Please try again.")
+
+
+def get_int(prompt, low):
+    while True:
+        try:
+            entry = int(input(prompt))
+        except ValueError as e:
+            print("ValueError:", e)
+        else:
+            if entry > low:
+                return entry
+            else:
+                print(f"Entry must be an integer greater than {low}. Please try again.")
+
+
+def display_description():
+    print('''\
+    This Find Simple Interest application will ask user to specify
+the amount of a loan and a interest rate, and then calculate and
+display the simple interest for the given loan at the specified
+interest for a specified number of years.''')
+
+def exit_program():
+    sys.exit("Terminating the program....")
+
+if __name__ == '__main__':
+    main()
